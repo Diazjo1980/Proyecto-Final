@@ -1,0 +1,127 @@
+<mvc:View
+    controllerName="logaligroup.finalproject.controller.EmployeeCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core" 
+    xmlns:u="sap.ui.unified">
+
+<Page id="employeeCreate" title="{i18n>createEmployee}">
+    <content>
+        <NavContainer id="navConteiner">
+            <pages>
+                <Page id="pageNavConteiner" showHeader="false">
+                    <content>
+                        <Wizard id="wizardCreateEmployee" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
+                            <WizardStep id="employeeStepType" title="{i18n>employeeType}" validated="true">
+                                <MessageStrip id="msgStripId" class="sapUiSmallMarginBottom"
+										text="{i18n>stepInfoMsg1}"
+										showIcon="true"/>
+                                        <HBox id="hBoxId"
+                                              alignItems="Center"
+                                              justifyContent="Center"
+                                              width="100%">
+                                                <Button id="interno" text="{i18n>interno}" press="onToStep2" class="sapUiSmallMarginEnd">
+													<customData>
+														<core:CustomData key="typeEmployee" value="interno"></core:CustomData>
+													</customData>
+												</Button>
+												<Button id="autonomo" text="{i18n>autonomo}" press="onToStep2" class="sapUiSmallMarginEnd">
+													<customData>
+														<core:CustomData key="typeEmployee" value="autonomo"></core:CustomData>
+													</customData>
+												</Button>
+												<Button id="gerente" text="{i18n>gerente}" press="onToStep2">
+													<customData>
+														<core:CustomData key="typeEmployee" value="gerente"></core:CustomData>
+													</customData>
+												</Button>                                            
+                                        </HBox>                                        
+                            </WizardStep>
+                            <WizardStep id="employeeData" title="{i18n>employeeData}">
+                                <MessageStrip id="msgStripInfo2" class="sapUiSmallMarginBottom"
+											  text="{i18n>stepInfoMsg2}" showIcon="true"/>
+
+                                <form:SimpleForm id="formEmployeeData" editable="true">
+                                    <Label id="lName" text="{i18n>name}" required="true"/>
+                                    <Input id="iName" valueState="{/_FirstNameState}" change="dataEmployeeValidation" value="{/FirstName}"/>
+                                    <Label id="lLastName" text="{i18n>lastName}" required="true"/>
+                                    <Input id="iLastName" valueState="{/_LastNameState}" change="dataEmployeeValidation" value="{/LastName}"/>
+                                    <Label id="lValidateButtons" text="{= ${/_type} === 'autonomo' ? ${i18n>cif} : ${i18n>dni}}" required="true"/>
+                                    <Input id="iDocumentDNI" value="{/Dni}" valueState="{/_DniState}" change="validateDNI"/>
+                                    <Label id="lPrice" text="{= ${/_type} === 'autonomo' ? ${i18n>precioDiario} : ${i18n>salarioBrutoAnual}}"/>
+                                        <VBox id="vBoxSliders" >
+                                            <Slider id="sInterno" 
+                                                    value="{/_Salary}"
+													min="12000" 
+													max="80000"
+													step="1000" inputsAsTooltips="true" showAdvancedTooltip="true" enableTickmarks="true"
+													width="100%" progress="false" class="sapUiSmallMarginBottom" 
+													visible="{=  ${/_type} === 'interno'}">
+											<ResponsiveScale id="rInterno" tickmarksBetweenLabels="100"/>
+											</Slider>
+											    <Slider id="sAutonomo"
+                                                        value="{/_Salary}"
+													    min="100" 
+													    max="2000"
+													    step="100" inputsAsTooltips="true" showAdvancedTooltip="true" enableTickmarks="true"
+											            width="100%" progress="false" class="sapUiSmallMarginBottom"
+													    visible="{=  ${/_type} === 'autonomo'}">
+											    <ResponsiveScale id="rAutonomo" tickmarksBetweenLabels="100"/>
+											</Slider>
+											    <Slider id="sGerente"
+                                                        value="{/_Salary}"
+														min="50000" 
+														max="200000"
+														step="1000" inputsAsTooltips="true" showAdvancedTooltip="true" enableTickmarks="true"
+														width="100%" progress="false" class="sapUiSmallMarginBottom"
+														visible="{=  ${/_type} === 'gerente'}">
+												<ResponsiveScale id="rGerente" tickmarksBetweenLabels="100"/>
+											</Slider>
+                                        </VBox>
+                                        <Label id="fechaIngreso" text="{i18n>fechaIncorporacion}" required="true"/>
+										<DatePicker id="dateSelection" dateValue="{/CreationDate}" valueState="{/_CreationDateState}" change="dataEmployeeValidation"/>                                        
+                                </form:SimpleForm>
+                            </WizardStep>
+                            <WizardStep id="aditionalInfo" title="{i18n>aditionalData}">
+                                <MessageStrip id="msgStripInfo3" class="sapUiSmallMarginBottom"
+											  text="{i18n>stepInfoMsg3}" showIcon="true"/>  
+                                <Label id="comentarios" text="{i18n>comentarios}" width="100%"/>
+											<TextArea id="areaTexto" value="{/Comments}" width="100%"/>
+											<UploadCollection id="UploadCollection"
+                                                              maximumFilenameLength="55"
+                                                              maximumFileSize="10"
+                                                              multiple="true"
+                                                              uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+                                                              sameFilenameAllowed="true"
+                                                              instantUpload="false"
+                                                              change="onChange"
+                                                              beforeUploadStarts="onBeforeUploadStart"
+                                                              noDataDescription="{i18n>cargarficheros}" />                                                                        
+                            </WizardStep>
+                        </Wizard>
+                    </content>
+                        <footer>
+                            <OverflowToolbar id="overFlowBar">
+                                <ToolbarSpacer id="toolBarSpacer"/>
+                                <Button id="overFlowBtnCancel" text="{i18n>cancel}" press="onCancel" type="Reject"/>
+                            </OverflowToolbar>
+						</footer>
+                </Page>
+                <Page id="ReviewPage" title="{i18n>resumen}">
+                    <core:Fragment fragmentName="logaligroup.finalproject.fragment.ReviewPage" type="XML"/>
+                    <footer>
+                        <Toolbar id="toolBarFooter">
+                            <ToolbarSpacer id="toolBarFooterSpacer"/>
+                            <Button id="saveBtnFooter" text="{i18n>save}" press="onSaveEmployee" type="Accept"/>
+                            <Button id="cancelBtnFooter" text="{i18n>cancel}" press="onCancel" type="Reject"/>
+                        </Toolbar>
+                    </footer>
+                </Page>                
+            </pages>
+        </NavContainer>
+    </content>
+</Page>
+</mvc:View >

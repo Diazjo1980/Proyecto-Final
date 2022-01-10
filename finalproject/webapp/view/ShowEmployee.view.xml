@@ -1,0 +1,7 @@
+<mvc:View
+    controllerName="logaligroup.finalproject.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+
+</mvc:View >

@@ -1,0 +1,32 @@
+<mvc:View controllerName="logaligroup.finalproject.controller.Menu"
+          xmlns:mvc="sap.ui.core.mvc"
+          displayBlock="true"
+          xmlns="sap.m"
+          xmlns:tiles="sap.m.GenericTile">
+
+    <Page id="menu" title="{i18n>menuTitle}">
+        <content>
+            <Panel id="panelEmployees" headerText="{i18n>menuEmployees}" expandable="true" expanded="true">
+                <GenericTile id="tileCreate" headerImage="sap-icon://add-employee" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="navToCreateEmployee">
+                    <TileContent id="crearEmpleado" footer="{i18n>crearEmpleado}">
+                        <ImageContent id="imageEmployee" />
+                    </TileContent>
+                </GenericTile>
+                <GenericTile id="tileShow" headerImage="sap-icon://employee-lookup" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="navToShowEmployee">
+                    <TileContent id="visualizarEmpleado" footer="{i18n>visualizarEmpleado}">
+                        <ImageContent id="imageShowEmployee" />
+                    </TileContent>
+                </GenericTile>                
+            </Panel>
+            <Panel id="panelPedidos" headerText="{i18n>menuPedidos}" expandable="true" expanded="true">
+                <GenericTile id="tilePedidos" headerImage="sap-icon://signature" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="navToFirmarPedidos">
+                    <TileContent id="firmarPedidos" footer="{i18n>firmarPedidos}">
+                        <ImageContent id="imageFirmarPedidos" />
+                    </TileContent>
+                </GenericTile>               
+            </Panel>
+        </content>
+
+    </Page>
+
+</mvc:View>
