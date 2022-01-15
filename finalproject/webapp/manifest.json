@@ -18,6 +18,14 @@
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "4.0"
                 }
+            },
+            "ZEMPLOYEES_SRV": {
+                "uri": "sap/opu/odata/sap/ZEMPLOYEES_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
             }
         }
     },
@@ -55,7 +63,9 @@
                 "settings": {
                     "bundleName": "logaligroup.finalproject.i18n.i18n"
                 }
+                   
             },
+
             "": {
                 "dataSource": "mainService",
                 "preload": true,
@@ -66,7 +76,18 @@
                     "earlyRequests": true,
                     "groupId": "$direct"
                 }
-            }
+            },
+
+            "odataModel": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "OneWay",
+                    "defaultCountMode": "Request"
+                },
+                "dataSource": "ZEMPLOYEES_SRV",
+                "preload": true
+            }             
         },
         "resources": {
             "css": [

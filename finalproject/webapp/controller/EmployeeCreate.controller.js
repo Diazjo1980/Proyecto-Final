@@ -9,7 +9,8 @@ sap.ui.define([
     function (Controller, MessageBox, UploadCollectionParameter) {
         "use strict";
 
-        function onInit() {
+        function onInit() {     
+            this._wizard = this.byId("wizardCreateEmployee");          
 
         };
 
@@ -188,10 +189,10 @@ sap.ui.define([
 
         //Función para editar un step
         function _editStep(step) {
-            var wizardNavContainer = this.byId("navConteiner");
+            let wizardNavContainer = this.byId("navConteiner");
             //Se añade un función al evento afterNavigate, ya que se necesita 
             //que la función se ejecute una vez ya se haya navegado a la vista principal
-            var fnAfterNavigate = function () {
+            let fnAfterNavigate = function () {
                 this._wizard.goToStep(this.byId(step));
                 //Se quita la función para que no vuelva a ejecutar al volver a nevagar
                 wizardNavContainer.detachAfterNavigate(fnAfterNavigate);
@@ -265,11 +266,31 @@ sap.ui.define([
             MessageBox.confirm(this.oView.getModel("i18n").getResourceBundle().getText("pCancelar"), {
                 onClose: function (oAction) {
                     if (oAction === "OK") {
+
+                        //Limpiamos el contenido al cancelar la acción
+                        let clearContent = function (content) {
+                            for (var i = 0; i < content.length; i++) {
+                                if (content[i].setValue) {
+                                    content[i].setValue("");
+                                }
+            
+                                if (content[i].getContent) {
+                                    clearContent(content[i].getContent());
+                                }
+                            }
+                        };                                                
+                        clearContent(this._wizard.getSteps());                        
+
                         //Regresamos al menú principal
                         //Se obtiene la instancia del routers 
                         let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                         //Se navega hacia el router "menu"
                         oRouter.navTo("menu", {}, true);
+                        
+                        //Se inicializa el primer paso 
+                        this._editStep(0);
+                        this._wizard.discardProgress(this._wizard.getSteps()[0]);                        
+
                     }
                 }.bind(this)
             });
@@ -324,7 +345,6 @@ sap.ui.define([
         EmployeesCreate.prototype.onChange = onChange;
         EmployeesCreate.prototype.onBeforeUploadStart = onBeforeUploadStart;
         EmployeesCreate.prototype.onStartUpload = onStartUpload;
-
 
         return EmployeesCreate;
 

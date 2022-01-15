@@ -7,8 +7,8 @@ sap.ui.define([
     function (Controller) {
         "use strict";
 
-        function onInit() {
-
+        function onInit() {         
+           
         };
 
         function navToCreateEmployee() { 

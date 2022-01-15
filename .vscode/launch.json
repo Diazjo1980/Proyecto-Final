@@ -2,54 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Start finalproject",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npx",
+      "name": "Run finalproject",
       "cwd": "${workspaceFolder}/finalproject",
-      "windows": {
-        "runtimeExecutable": "npx.cmd"
-      },
       "runtimeArgs": [
         "fiori",
         "run"
       ],
-      "args": [
-        "--open",
-        "'test/flpSandbox.html#logaligroupfinalproject-display'"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229,
-      "env": {
-        "DEBUG": "--inspect",
-        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/PoryectoFinal/finalproject\"}"
-      }
-    },
-    {
-      "name": "Start finalproject Local",
       "type": "node",
       "request": "launch",
-      "cwd": "${workspaceFolder}/finalproject",
       "runtimeExecutable": "npx",
+      "args": [
+        "--open",
+        "index.html"
+      ],
       "windows": {
         "runtimeExecutable": "npx.cmd"
       },
-      "runtimeArgs": [
-        "fiori",
-        "run"
-      ],
-      "args": [
-        "--config",
-        "./ui5-local.yaml",
-        "--open",
-        "'test/flpSandbox.html#logaligroupfinalproject-display'"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229,
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
       "env": {
-        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/PoryectoFinal/finalproject\"}"
+        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/PoryectoFinal/finalproject\"}",
+        "FIORI_TOOLS_UI5_VERSION": "",
+        "FIORI_TOOLS_UI5_URI": "https://ui5.sap.com",
+        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"path\":\"/sap\",\"destination\":\"logaligroupERP\"}]"
       }
     }
   ],
