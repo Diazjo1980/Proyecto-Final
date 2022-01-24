@@ -15,9 +15,9 @@
 					<Button icon="sap-icon://nav-back" press="onPressBack"></Button>
 					<SearchField liveChange="onSearchEmployee" width="100%" />
 				</Toolbar>
-				<List itemPress="onSelectEmployee" items="{path:'odatamodel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'diazmjorgea@gmail.com'}]}">
+				<List id="listSelectedEmployee" itemPress="onSelectEmployee" items="{path:'odatamodel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'diazmjorgea@gmail.com'}]}">
 					<items>
-						<StandardListItem title="{odatamodel>FirstName} {odatamodel>LastName}" description="{odatamodel>Dni}" type="Active"/>
+						<StandardListItem id="stdListEmployee" title="{odatamodel>FirstName} {odatamodel>LastName}" description="{odatamodel>Dni}" type="Active"/>
 					</items>
 				</List>
 			</Page>

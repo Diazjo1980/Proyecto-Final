@@ -1,29 +1,63 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History"
+    "sap/ui/core/routing/History",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
+     * @param {typeof sap.ui.model.Filter} Filter
+     * @param {typeof sap.ui.model.FilterOperator} FilterOperator      
      */
-    function (Controller, History) {
+    function (Controller, History, Filter, FilterOperator) {
         "use strict";
 
         function onInit() {
             this._splitAppEmployee = this.byId("splitAppEmployee");
         };
 
+        function _onObjectMatched(oEvent) {
+
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("ShowEmployee").attachPatternMatched(_onObjectMatched, this);
+        };
+
         //Función al pulsar "<" para regresar al menú
         function onPressBack() {
-            // vamos al menu
-            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("menu", {}, true);
 
-            this._splitAppEmployee = this.byId("splitAppEmployee");
+            let oHistory = History.getInstance();
+            let sPreviousHash = oHistory.getPreviousHash();
+
+            if (sPreviousHash === "ShowEmployee") {
+                window.history.go(-1);
+            } else {
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("menu", {}, true);
+            }
 
         };
 
         //Función para filtrar empleados
-        function onSearchEmployee() {
+        function onSearchEmployee(oEvent) {
+
+            // 
+            let aFilters = [];
+            let sQuery = oEvent.getSource().getValue();
+            if (sQuery && sQuery.length > 0) {
+                let filter = new Filter({filter: [new Filter({ path: "FirstName", operator: FilterOperator.Contains, value1: sQuery }), 
+                                                  new Filter({ path: "SapId", operator: 'EQ', value1: this.getOwnerComponent().SapId }) ] });
+                              
+                aFilters.push(filter);
+
+            } else {
+                let filter = new Filter({filter: [new Filter({ path: "SapId", operator: 'EQ', value1: this.getOwnerComponent().SapId }) ] });
+                aFilters.push(filter);
+            }
+
+            // Actualizar la lista ya sea por filtro o por nuestro SapId
+            let oList = this.byId("listSelectedEmployee");
+            let oBinding = oList.getBinding("items");
+            oBinding.filter(aFilters, "Application");
 
         };
 
@@ -35,7 +69,7 @@ sap.ui.define([
             let context = oEvent.getParameter("listItem").getBindingContext("odatamodel");
             //Se almacena el usuario seleccionado
             this.employeeId = context.getProperty("EmployeeId");
-            let detailEmployee = this.byId("detailEmployee");
+            var detailEmployee = this.byId("detailEmployee");
             //Se bindea a la vista con la entidad Users y las claves del id del empleado y el id del Component.js
             detailEmployee.bindElement("odatamodel>/Users(EmployeeId='" + this.employeeId + "',SapId='" + this.getOwnerComponent().SapId + "')");
 
@@ -86,8 +120,8 @@ sap.ui.define([
             let newRise = this.riseDialog.getModel("newRise");
             //Se obtiene los datos
             let odata = newRise.getData();
-            //Se prepara la informacion para enviar a sap y se agrega el campo sapId con el id del alumno y el id del empleado
-            var body = {
+            //Se prepara la informacion para enviar a sap y se agrega el campo sapId con el id del component y el id del empleado
+            let body = {
                 Amount: odata.Amount,
                 CreationDate: odata.CreationDate,
                 Comments: odata.Comments,
