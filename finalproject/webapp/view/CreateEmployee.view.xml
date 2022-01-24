@@ -10,7 +10,7 @@
 
 <Page id="employeeCreate" title="{i18n>createEmployee}">
     <content>
-        <NavContainer id="navConteiner">
+        <NavContainer id="navContainer">
             <pages>
                 <Page id="pageNavConteiner" showHeader="false">
                     <content>

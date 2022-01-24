@@ -17,6 +17,9 @@ sap.ui.define([
             // vamos al menu
             let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("menu", {}, true);
+
+            this._splitAppEmployee = this.byId("splitAppEmployee");
+
         };
 
         //Función para filtrar empleados
@@ -29,12 +32,12 @@ sap.ui.define([
 
             //Se navega al detalle del empleado
             this._splitAppEmployee.to(this.createId("detailEmployee"));
-            let context = oEvent.getParameter("listItem").getBindingContext("odataModel");
+            let context = oEvent.getParameter("listItem").getBindingContext("odatamodel");
             //Se almacena el usuario seleccionado
             this.employeeId = context.getProperty("EmployeeId");
             let detailEmployee = this.byId("detailEmployee");
-            //Se bindea a la vista con la entidad Users y las claves del id del empleado y el id del alumno
-            detailEmployee.bindElement("odataModel>/Users(EmployeeId='" + this.employeeId + "',SapId='" + this.getOwnerComponent().SapId + "')");
+            //Se bindea a la vista con la entidad Users y las claves del id del empleado y el id del Component.js
+            detailEmployee.bindElement("odatamodel>/Users(EmployeeId='" + this.employeeId + "',SapId='" + this.getOwnerComponent().SapId + "')");
 
         };
 
@@ -46,7 +49,7 @@ sap.ui.define([
                 onClose: function (oAction) {
                     if (oAction === "OK") {
                         //Se llama a la función remove
-                        this.getView().getModel("odataModel").remove("/Users(EmployeeId='" + this.employeeId + "',SapId='" + this.getOwnerComponent().SapId + "')", {
+                        this.getView().getModel("odatamodel").remove("/Users(EmployeeId='" + this.employeeId + "',SapId='" + this.getOwnerComponent().SapId + "')", {
                             success: function (data) {
                                 sap.m.MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("usuarioEliminado"));
                                 //En el detalle se muestra el mensaje "Seleecione empleado"
@@ -64,7 +67,7 @@ sap.ui.define([
         //Función para ascender a un empleado
         function onRiseEmployee(oEvent) {
             if (!this.riseDialog) {
-                //this.riseDialog = sap.ui.xmlfragment("logaligroup/rrhh/fragment/RiseEmployee", this);
+
                 this.riseDialog = sap.ui.xmlfragment("logaligroup/finalproject/fragment/RiseEmployee", this);
                 this.getView().addDependent(this.riseDialog);
             }
@@ -85,14 +88,14 @@ sap.ui.define([
             let odata = newRise.getData();
             //Se prepara la informacion para enviar a sap y se agrega el campo sapId con el id del alumno y el id del empleado
             var body = {
-                Ammount: odata.Ammount,
+                Amount: odata.Amount,
                 CreationDate: odata.CreationDate,
                 Comments: odata.Comments,
                 SapId: this.getOwnerComponent().SapId,
                 EmployeeId: this.employeeId
             };
             this.getView().setBusy(true);
-            this.getView().getModel("odataModel").create("/Salaries", body, {
+            this.getView().getModel("odatamodel").create("/Salaries", body, {
                 success: function () {
                     this.getView().setBusy(false);
                     sap.m.MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("ascensoCorrecto"));
@@ -123,8 +126,8 @@ sap.ui.define([
 
         function onFileDeleted(oEvent) {
             let oUploadCollection = oEvent.getSource();
-            let sPath = oEvent.getParameter("item").getBindingContext("odataModel").getPath();
-            this.getView().getModel("odataModel").remove(sPath, {
+            let sPath = oEvent.getParameter("item").getBindingContext("odatamodel").getPath();
+            this.getView().getModel("odatamodel").remove(sPath, {
                 success: function () {
                     oUploadCollection.getBinding("items").refresh();
                 },
@@ -135,7 +138,7 @@ sap.ui.define([
         };
 
         function downloadFile(oEvent) {
-            let sPath = oEvent.getSource().getBindingContext("odataModel").getPath();
+            let sPath = oEvent.getSource().getBindingContext("odatamodel").getPath();
             window.open("/sap/opu/odata/sap/ZEMPLOYEES_SRV" + sPath + "/$value");
         };
 

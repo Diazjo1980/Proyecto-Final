@@ -12,15 +12,15 @@
                     <PropertyRef Name="SapId"/>
                 </Key>
                 <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Employee ID"/>
-                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="SAP Id"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="SAP Id"/>
                 <Property Name="Type" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Type"/>
                 <Property Name="FirstName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="First Name"/>
                 <Property Name="LastName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Last Name"/>
                 <Property Name="Dni" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Document Id"/>
                 <Property Name="CreationDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
                 <Property Name="Comments" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Comments"/>
-                <NavigationProperty Name="UserToAttachment" Relationship="ZEMPLOYEES_SRV.Assoc_User_Attachment" FromRole="FromRole_Assoc_User_Attachment" ToRole="ToRole_Assoc_User_Attachment"/>
                 <NavigationProperty Name="UserToSalary" Relationship="ZEMPLOYEES_SRV.Assoc_User_Salary" FromRole="FromRole_Assoc_User_Salary" ToRole="ToRole_Assoc_User_Salary"/>
+                <NavigationProperty Name="UserToAttachment" Relationship="ZEMPLOYEES_SRV.Assoc_User_Attachment" FromRole="FromRole_Assoc_User_Attachment" ToRole="ToRole_Assoc_User_Attachment"/>
             </EntityType>
             <EntityType Name="Salary" sap:content-version="1">
                 <Key>
@@ -29,10 +29,10 @@
                     <PropertyRef Name="EmployeeId"/>
                 </Key>
                 <Property Name="SalaryId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Salary Id"/>
-                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Sap Id"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Sap Id"/>
                 <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Employee Id"/>
                 <Property Name="CreationDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
-                <Property Name="Ammount" Type="Edm.Decimal" Precision="17" Scale="2" sap:unicode="false" sap:unit="Waers" sap:label="Amount" sap:sortable="false"/>
+                <Property Name="Amount" Type="Edm.Decimal" Precision="17" Scale="2" sap:unicode="false" sap:unit="Waers" sap:label="Amount" sap:sortable="false"/>
                 <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:semantics="currency-code"/>
                 <Property Name="Comments" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Comments"/>
             </EntityType>
@@ -43,7 +43,7 @@
                     <PropertyRef Name="EmployeeId"/>
                 </Key>
                 <Property Name="AttId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Dummy"/>
-                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="SAP Id"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="SAP Id"/>
                 <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Empoyee Id"/>
                 <Property Name="DocName" Type="Edm.String" Nullable="false" MaxLength="80" sap:unicode="false" sap:label="Document Name"/>
                 <Property Name="MimeType" Type="Edm.String" Nullable="false" MaxLength="128" sap:unicode="false" sap:label="MIME type"/>

@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run finalproject",
+      "name": "Run FinalProject",
       "cwd": "${workspaceFolder}/finalproject",
       "runtimeArgs": [
         "fiori",

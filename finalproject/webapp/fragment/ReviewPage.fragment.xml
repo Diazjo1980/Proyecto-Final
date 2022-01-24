@@ -22,7 +22,7 @@
 				<Label text="{i18n>lastName}"/>
 				<Text text="{/LastName}"/>
 				<Label text="{= ${/_type} === 'autonomo' ? ${i18n>cif} : ${i18n>dni}}"/>
-				<Text  text="{/dni}"/>
+				<Text  text="{/Dni}"/>
 				<Label text="{= ${/_type} === 'autonomo' ? ${i18n>precioDiario} : ${i18n>salarioBrutoAnual}}"/>
 				<Text  text="{/_Salary}"/>
 				<Label text="{i18n>fechaIncorporacion}"/>

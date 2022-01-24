@@ -165,7 +165,7 @@ sap.ui.define([
             this.dataEmployeeValidation(oEvent, function (isValid) {
                 if (isValid) {
                     //Se navega a la página review
-                    let wizardNavContainer = this.byId("navConteiner");
+                    let wizardNavContainer = this.byId("navContainer");
                     wizardNavContainer.to(this.byId("ReviewPage"));
                     //Se obtiene los archivos subidos
                     let uploadCollection = this.byId("UploadCollection");
@@ -189,7 +189,7 @@ sap.ui.define([
 
         //Función para editar un step
         function _editStep(step) {
-            let wizardNavContainer = this.byId("navConteiner");
+            let wizardNavContainer = this.byId("navContainer");
             //Se añade un función al evento afterNavigate, ya que se necesita 
             //que la función se ejecute una vez ya se haya navegado a la vista principal
             let fnAfterNavigate = function () {
@@ -229,12 +229,12 @@ sap.ui.define([
             }
             body.SapId = this.getOwnerComponent().SapId;
             body.UserToSalary = [{
-                Ammount: parseFloat(json._Salary).toString(),
+                Amount: parseFloat(json._Salary).toString(),
                 Comments: json.Comments,
                 Waers: "EUR"
             }];
             this.getView().setBusy(true);
-            this.getView().getModel("odataModel").create("/Users", body, {
+            this.getView().getModel("odatamodel").create("/Users", body, {
                 success: function (data) {
                     this.getView().setBusy(false);
                     //Se almacena el nuevo usuario
@@ -242,7 +242,7 @@ sap.ui.define([
                     MessageBox.information(this.oView.getModel("i18n").getResourceBundle().getText("empleadoNuevo") + ": " + this.newUser, {
                         onClose: function () {
                             //Se vuelve al wizard, para que al vovler a entrar a la aplicacion aparezca ahi
-                            let wizardNavContainer = this.byId("navConteiner");
+                            let wizardNavContainer = this.byId("navContainer");
                             wizardNavContainer.back();
                             //Regresamos al menú principal
                             //Se obtener la intancia del router
@@ -304,7 +304,7 @@ sap.ui.define([
             // x-csrf-token
             let oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
                 name: "x-csrf-token",
-                value: this.getView().getModel("odataModel").getSecurityToken()
+                value: this.getView().getModel("odatamodel").getSecurityToken()
             });
             oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
         };
@@ -337,9 +337,9 @@ sap.ui.define([
         EmployeesCreate.prototype.dataEmployeeValidation = dataEmployeeValidation;
         EmployeesCreate.prototype.wizardCompletedHandler = wizardCompletedHandler;
         EmployeesCreate.prototype._editStep = _editStep;
-        EmployeesCreate.prototype.editStepOne = editStepOne;
-        EmployeesCreate.prototype.editStepTwo = editStepTwo;
-        EmployeesCreate.prototype.editStepThree = editStepThree;
+        EmployeesCreate.prototype.onEditStepOne = editStepOne;
+        EmployeesCreate.prototype.onEditStepTwo = editStepTwo;
+        EmployeesCreate.prototype.onEditStepThree = editStepThree;
         EmployeesCreate.prototype.onSaveEmployee = onSaveEmployee;
         EmployeesCreate.prototype.onCancel = onCancel;
         EmployeesCreate.prototype.onChange = onChange;

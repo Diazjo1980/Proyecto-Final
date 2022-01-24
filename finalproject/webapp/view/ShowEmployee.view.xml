@@ -15,9 +15,9 @@
 					<Button icon="sap-icon://nav-back" press="onPressBack"></Button>
 					<SearchField liveChange="onSearchEmployee" width="100%" />
 				</Toolbar>
-				<List itemPress="onSelectEmployee" items="{path:'odataModel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'diazmjorgea@gmail.com'}]}">
+				<List itemPress="onSelectEmployee" items="{path:'odatamodel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'diazmjorgea@gmail.com'}]}">
 					<items>
-						<StandardListItem title="{odataModel>FirstName} {odataModel>LastName}" description="{odataModel>Dni}" type="Active"/>
+						<StandardListItem title="{odatamodel>FirstName} {odatamodel>LastName}" description="{odatamodel>Dni}" type="Active"/>
 					</items>
 				</List>
 			</Page>
@@ -32,14 +32,14 @@
 				id="detailEmployee"
 				title="{i18n>detalleEmpleado}">
 				<ObjectHeader
-					icon= "{= ${odataModel>Type}==='0' ? 'sap-icon://employee-pane' : ${odataModel>Type}==='1' ? 'sap-icon://employee' : 'sap-icon://leads' }"
-					title="{odataModel>FirstName} {odataModel>LastName}"
-					intro="{odataModel>Dni}"
+					icon= "{= ${odatamodel>Type}==='0' ? 'sap-icon://employee-pane' : ${odatamodel>Type}==='1' ? 'sap-icon://employee' : 'sap-icon://leads' }"
+					title="{odatamodel>FirstName} {odatamodel>LastName}"
+					intro="{odatamodel>Dni}"
 					class="sapUiResponsivePadding--header"
 					responsive="true">
-						<ObjectAttribute title="{i18n>fechaIncorporacion}" text="{ path:'odataModel>CreationDate', type:'sap.ui.model.type.Date'}" />
-						<ObjectAttribute title="{i18n>tipo}" text="{= ${odataModel>Type} === '0' ? ${i18n>interno} : ${odataModel>Type} === '1' ? ${i18n>autonomo} : ${i18n>gerente}}" />
-						<ObjectAttribute title="{i18n>comentarios}" text="{odataModel>Comments}" />
+						<ObjectAttribute title="{i18n>fechaIncorporacion}" text="{ path:'odatamodel>CreationDate', type:'sap.ui.model.type.Date'}" />
+						<ObjectAttribute title="{i18n>tipo}" text="{= ${odatamodel>Type} === '0' ? ${i18n>interno} : ${odatamodel>Type} === '1' ? ${i18n>autonomo} : ${i18n>gerente}}" />
+						<ObjectAttribute title="{i18n>comentarios}" text="{odatamodel>Comments}" />
 				</ObjectHeader>
 				<IconTabBar
 					class="sapUiResponsiveContentPadding">
@@ -56,7 +56,7 @@
                                         sameFilenameAllowed="true"
                                         instantUpload="true"
                                         uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
-                                        items="{odataModel>UserToAttachment}"
+                                        items="{odatamodel>UserToAttachment}"
                                         change="onChange"
                                         uploadComplete="onUploadComplete"
                                         beforeUploadStarts="onBeforeUploadStart"
@@ -64,9 +64,9 @@
                                         noDataDescription="{i18n>cargarficheros}">
                                 <items>
                                     <UploadCollectionItem
-                                        documentId="{odataModel>AttId}"
+                                        documentId="{odatamodel>AttId}"
                                         visibleEdit="false"
-                                        fileName="{odataModel>DocName}"
+                                        fileName="{odatamodel>DocName}"
                                         press="downloadFile">
                                     </UploadCollectionItem>
                                 </items>
@@ -84,15 +84,15 @@
 								enableScroll="false"
 								height="100%"
 								sortOldestFirst="true"
-								content="{odataModel>UserToSalary}">
+								content="{odatamodel>UserToSalary}">
 								<suite:content>
 									<suite:TimelineItem
-										userName="{parts:[{path:'odataModel>Ammount'},{path:'odataModel>Waers'}],
+										userName="{parts:[{path:'odatamodel>Amount'},{path:'odatamodel>Waers'}],
 												type: 'sap.ui.model.type.Currency',
 												formatOptions: {showMeasure: false}}"
 										icon="sap-icon://circle-task"
-										text="{odataModel>Comments}"
-										dateTime="{odataModel>CreationDate}">
+										text="{odatamodel>Comments}"
+										dateTime="{odatamodel>CreationDate}">
 									</suite:TimelineItem>
 								</suite:content>
 							</suite:Timeline>
