@@ -21,7 +21,7 @@ sap.ui.define([
 
         function _onObjectMatched(oEvent) {
 
-            this._splitAppEmployee.to(this.createId("detailEmployee"));
+            this._splitAppEmployee.to(this.createId("detailSelectEmployee"));
 
         };
 
