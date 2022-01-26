@@ -35,8 +35,7 @@ sap.ui.define([
                 window.history.go(-1);
             } else {
                 let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("menu", {}, true);
-                this._splitAppEmployee.to(this.createId("splitAppEmployee"));
+                oRouter.navTo("menu", {}, true);                
             }
 
         };
