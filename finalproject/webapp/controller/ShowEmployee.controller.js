@@ -14,12 +14,15 @@ sap.ui.define([
 
         function onInit() {
             this._splitAppEmployee = this.byId("splitAppEmployee");
+
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("ShowEmployee").attachPatternMatched(_onObjectMatched, this);
         };
 
         function _onObjectMatched(oEvent) {
 
-            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("ShowEmployee").attachPatternMatched(_onObjectMatched, this);
+            this._splitAppEmployee.to(this.createId("detailEmployee"));
+
         };
 
         //Función al pulsar "<" para regresar al menú
@@ -33,6 +36,7 @@ sap.ui.define([
             } else {
                 let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("menu", {}, true);
+                this._splitAppEmployee.to(this.createId("splitAppEmployee"));
             }
 
         };
@@ -43,15 +47,41 @@ sap.ui.define([
             // 
             let aFilters = [];
             let sQuery = oEvent.getSource().getValue();
+
             if (sQuery && sQuery.length > 0) {
-                let filter = new Filter({filter: [new Filter({ path: "FirstName", operator: FilterOperator.Contains, value1: sQuery }), 
-                                                  new Filter({ path: "SapId", operator: 'EQ', value1: this.getOwnerComponent().SapId }) ] });
-                              
+
+                let filter = new Filter({
+                    filters: [
+                        new Filter({
+                            path: 'SapId',
+                            operator: 'EQ',
+                            value1: this.getOwnerComponent().SapId
+                        }),
+                        new Filter({
+                            path: 'FirstName',
+                            operator: FilterOperator.Contains,
+                            value1: sQuery
+                        })
+                    ], and: true
+
+                })
+
                 aFilters.push(filter);
 
             } else {
-                let filter = new Filter({filter: [new Filter({ path: "SapId", operator: 'EQ', value1: this.getOwnerComponent().SapId }) ] });
+                let filter = new Filter({
+                    filters: [
+                        new Filter({
+                            path: 'SapId',
+                            operator: 'EQ',
+                            value1: this.getOwnerComponent().SapId
+                        }),
+
+                    ], and: true
+                })
+
                 aFilters.push(filter);
+
             }
 
             // Actualizar la lista ya sea por filtro o por nuestro SapId
@@ -143,6 +173,18 @@ sap.ui.define([
 
         };
 
+        //Función que se ejecuta al cargar un fichero en el uploadCollection
+        //Se agrega el parametro de cabecera x-csrf-token con el valor del token del modelo
+        function onChange(oEvent) {
+            var oUploadCollection = oEvent.getSource();
+            // Header Token
+            var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+                name: "x-csrf-token",
+                value: this.getView().getModel("odatamodel").getSecurityToken()
+            });
+            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+        };
+
         //Función que se ejecuta por cada fichero que se va a subir a sap
         //Se debe agregar el parametro de cabecera "slug" con el valor "id de sap del alumno",id del nuevo usuario y nombre del fichero, separados por ;
         function onBeforeUploadStart(oEvent) {
@@ -188,6 +230,7 @@ sap.ui.define([
         ShowEmployees.prototype.onRiseEmployee = onRiseEmployee;
         ShowEmployees.prototype.onCloseRiseDialog = onCloseRiseDialog;
         ShowEmployees.prototype.addRise = addRise;
+        ShowEmployees.prototype.onChange = onChange;
         ShowEmployees.prototype.onBeforeUploadStart = onBeforeUploadStart;
         ShowEmployees.prototype.onUploadComplete = onUploadComplete;
         ShowEmployees.prototype.onFileDeleted = onFileDeleted;
