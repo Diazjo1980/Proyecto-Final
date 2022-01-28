@@ -28,7 +28,7 @@
       }
     },
     {
-      "name": "Run Finalproject",
+      "name": "Run Final project",
       "cwd": "${workspaceFolder}/finalproject",
       "runtimeArgs": [
         "fiori",

@@ -11,7 +11,7 @@
     "description": "{{appDescription}}",
     "dataSources": {
       "ZEMPLOYEES_SRV": {
-        "uri": "/sap/opu/odata/sap/ZEMPLOYEES_SRV/",
+        "uri": "sap/opu/odata/sap/ZEMPLOYEES_SRV/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
